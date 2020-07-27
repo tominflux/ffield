@@ -1,5 +1,7 @@
 
-
+/**
+ * Field data types.
+ */
 const FIELD_TYPE = {
     STRING: "STRING",
     NUMBER: "NUMBER",
@@ -8,6 +10,9 @@ const FIELD_TYPE = {
     ARRAY: "ARRAY"
 }
 
+/**
+ * Representation of equivalent native JS types.
+ */
 const JS_TYPE = {
     STRING: "string",
     NUMBER: "number",
