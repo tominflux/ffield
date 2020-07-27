@@ -39,8 +39,8 @@ const jtf = new Map([
 
 /**
  * Convert field type to native js type.
- * @param {FIELD_TYPE} fieldType 
- * @returns {JS_TYPE}
+ * @param {string} fieldType 
+ * @returns {string}
  */
 const fieldTypeToJsType = (fieldType) => {
     //Ensure given field type exists.
@@ -57,8 +57,8 @@ const fieldTypeToJsType = (fieldType) => {
 
 /**
  * Convert native js type to field type.
- * @param {JS_TYPE} jsType 
- * @returns {FIELD_TYPE}
+ * @param {string} jsType 
+ * @returns {string}
  */
 const jsTypeToFieldType = (jsType) => {
     //Ensure a conversion for given js type exists.
@@ -87,8 +87,10 @@ exports.jsTypeToFieldType = jsTypeToFieldType
 
 /**
  * Create a field object.
- * @param {FIELD_TYPE} fieldType data type
- * @param {*} fieldData Native js data type must match field type
+ * Native js type of fieldData must match equivalent
+ * fieldType.
+ * @param {string} fieldType Field's data type.
+ * @param {*} fieldData Field's data content.
  */
 const createField = (fieldType, fieldData) => {
     const creationErr = (msg) => new Error(
@@ -122,8 +124,11 @@ const createField = (fieldType, fieldData) => {
 
 /**
  * Validate a field object.
- * @param {*} field Field object to validate.
- * @param {*} fieldValidator Optional functional field validator. (true = valid)
+ * @param {{
+ *  type: string,
+ *  data: any
+ * }} field Field object to validate.
+ * @param {function} fieldValidator Functional field validator. (true = valid)
  */
 const validateField = (field, fieldValidator=()=>true) => {
     const fieldJson = JSON.stringify(field)
@@ -191,9 +196,15 @@ const validateField = (field, fieldValidator=()=>true) => {
 /**
  * Update the data of a field object.
  * (Performs validation on updated field object too.)
- * @param {*} field Field object to update.
+ * @param {{
+ *  type: string,
+ *  data: any
+ * }} field Field object to update.
  * @param {*} newData New data to apply to field object.
- * @returns {*} Updated field object.
+ * @returns {{
+ *  type: string,
+ *  data: any
+ * }} Updated field object.
  */
 const updateField = (field, newData) => {
     //Create copy of field with new data applied.
@@ -210,8 +221,14 @@ const updateField = (field, newData) => {
 /**
  * Clone a field object.
  * (Performs validation on cloned field object too.)
- * @param {*} field Field object to clone.
- * @returns {*} Cloned field object.
+ * @param {{
+ *  type: string,
+ *  data: any
+ * }} field Field object to clone.
+ * @returns {{
+ *  type: string,
+ *  data: any
+ * }} Cloned field object.
  */
 const cloneField = (field) => {
     //Create copy of field.
@@ -223,7 +240,6 @@ const cloneField = (field) => {
     //Return copied field
     return copiedField
 }
-
 
 exports.createField = createField
 exports.validateField = validateField

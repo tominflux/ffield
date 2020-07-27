@@ -15,23 +15,25 @@ Small Node.js library for creating and validating data fields.
 ## Functions
 
 <dl>
-<dt><a href="#fieldTypeToJsType">fieldTypeToJsType(fieldType)</a> ⇒ <code><a href="#JS_TYPE">JS_TYPE</a></code></dt>
+<dt><a href="#fieldTypeToJsType">fieldTypeToJsType(fieldType)</a> ⇒ <code>string</code></dt>
 <dd><p>Convert field type to native js type.</p>
 </dd>
-<dt><a href="#jsTypeToFieldType">jsTypeToFieldType(jsType)</a> ⇒ <code><a href="#FIELD_TYPE">FIELD_TYPE</a></code></dt>
+<dt><a href="#jsTypeToFieldType">jsTypeToFieldType(jsType)</a> ⇒ <code>string</code></dt>
 <dd><p>Convert native js type to field type.</p>
 </dd>
 <dt><a href="#createField">createField(fieldType, fieldData)</a></dt>
-<dd><p>Create a field object.</p>
+<dd><p>Create a field object.
+Native js type of fieldData must match equivalent
+fieldType.</p>
 </dd>
 <dt><a href="#validateField">validateField(field, fieldValidator)</a></dt>
 <dd><p>Validate a field object.</p>
 </dd>
-<dt><a href="#updateField">updateField(field, newData)</a> ⇒ <code>*</code></dt>
+<dt><a href="#updateField">updateField(field, newData)</a> ⇒ <code>Object</code></dt>
 <dd><p>Update the data of a field object.
 (Performs validation on updated field object too.)</p>
 </dd>
-<dt><a href="#cloneField">cloneField(field)</a> ⇒ <code>*</code></dt>
+<dt><a href="#cloneField">cloneField(field)</a> ⇒ <code>Object</code></dt>
 <dd><p>Clone a field object.
 (Performs validation on cloned field object too.)</p>
 </dd>
@@ -51,37 +53,39 @@ Representation of equivalent native JS types.
 **Kind**: global constant  
 <a name="fieldTypeToJsType"></a>
 
-## fieldTypeToJsType(fieldType) ⇒ [<code>JS\_TYPE</code>](#JS_TYPE)
+## fieldTypeToJsType(fieldType) ⇒ <code>string</code>
 Convert field type to native js type.
 
 **Kind**: global function  
 
 | Param | Type |
 | --- | --- |
-| fieldType | [<code>FIELD\_TYPE</code>](#FIELD_TYPE) | 
+| fieldType | <code>string</code> | 
 
 <a name="jsTypeToFieldType"></a>
 
-## jsTypeToFieldType(jsType) ⇒ [<code>FIELD\_TYPE</code>](#FIELD_TYPE)
+## jsTypeToFieldType(jsType) ⇒ <code>string</code>
 Convert native js type to field type.
 
 **Kind**: global function  
 
 | Param | Type |
 | --- | --- |
-| jsType | [<code>JS\_TYPE</code>](#JS_TYPE) | 
+| jsType | <code>string</code> | 
 
 <a name="createField"></a>
 
 ## createField(fieldType, fieldData)
 Create a field object.
+Native js type of fieldData must match equivalent
+fieldType.
 
 **Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| fieldType | [<code>FIELD\_TYPE</code>](#FIELD_TYPE) | data type |
-| fieldData | <code>\*</code> | Native js data type must match field type |
+| fieldType | <code>string</code> | Field's data type. |
+| fieldData | <code>\*</code> | Field's data content. |
 
 <a name="validateField"></a>
 
@@ -92,32 +96,32 @@ Validate a field object.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| field | <code>\*</code> | Field object to validate. |
-| fieldValidator | <code>\*</code> | Optional functional field validator. (true = valid) |
+| field | <code>Object</code> | Field object to validate. |
+| fieldValidator | <code>function</code> | Functional field validator. (true = valid) |
 
 <a name="updateField"></a>
 
-## updateField(field, newData) ⇒ <code>\*</code>
+## updateField(field, newData) ⇒ <code>Object</code>
 Update the data of a field object.
 (Performs validation on updated field object too.)
 
 **Kind**: global function  
-**Returns**: <code>\*</code> - Updated field object.  
+**Returns**: <code>Object</code> - Updated field object.  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| field | <code>\*</code> | Field object to update. |
+| field | <code>Object</code> | Field object to update. |
 | newData | <code>\*</code> | New data to apply to field object. |
 
 <a name="cloneField"></a>
 
-## cloneField(field) ⇒ <code>\*</code>
+## cloneField(field) ⇒ <code>Object</code>
 Clone a field object.
 (Performs validation on cloned field object too.)
 
 **Kind**: global function  
-**Returns**: <code>\*</code> - Cloned field object.  
+**Returns**: <code>Object</code> - Cloned field object.  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| field | <code>\*</code> | Field object to clone. |
+| field | <code>Object</code> | Field object to clone. |
