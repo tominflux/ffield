@@ -185,7 +185,7 @@ const validateField = (field, fieldValidator=()=>true) => {
  * @param {string} fieldType Field's data type.
  * @param {*} fieldData Field's data content.
  */
-const createField = (fieldType, fieldData) => {
+const createField = (fieldType, fieldData=null) => {
     //Create field object.
     const field = {
         type: fieldType,
@@ -216,7 +216,7 @@ const createField = (fieldType, fieldData) => {
  *  data: any
  * }} Updated field object.
  */
-const updateField = (field, newData) => {
+const updateField = (field, newData=null) => {
     //Create copy of field with new data applied.
     const newField = {
         ...field, 

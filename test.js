@@ -211,6 +211,7 @@ describe("Field Functions", () => {
         it("Updates field with anticipated data", () => {
             const field = createField(FIELD_TYPE.STRING, "Hello world.")
             assert.doesNotThrow(() => updateField(field, "New Message"))
+            assert.doesNotThrow(() => updateField(field, null))
             const updatedField = updateField(field, "New Message")
             const expectedField = {
                 type: FIELD_TYPE.STRING,
