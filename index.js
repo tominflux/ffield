@@ -33,7 +33,7 @@ const jtf = new Map([
 ])
 
 /**
- * Convert catalogg field type to native js type.
+ * Convert field type to native js type.
  * @param {FIELD_TYPE} fieldType 
  * @returns {JS_TYPE}
  */
@@ -41,7 +41,7 @@ const fieldTypeToJsType = (fieldType) => {
     //Ensure given field type exists.
     if (!ftj.has(fieldType)) {
         throw new Error(
-            `catalogg field type to js type conversion ` +
+            `Field type to js type conversion ` +
             `error: Field type "${fieldType}" does not ` +
             `exist.`
         )
@@ -51,7 +51,7 @@ const fieldTypeToJsType = (fieldType) => {
 }
 
 /**
- * Convert native js type to catalogg field type.
+ * Convert native js type to field type.
  * @param {JS_TYPE} jsType 
  * @returns {FIELD_TYPE}
  */
@@ -59,7 +59,7 @@ const jsTypeToFieldType = (jsType) => {
     //Ensure a conversion for given js type exists.
     if (!jtf.has(jsType)) {
         throw new Error(
-            `catalogg js type to field type conversion ` +
+            `Js type to field type conversion ` +
             `error: No conversion exists for js type ` +
             `"${jsType}".`
         )
@@ -81,13 +81,13 @@ exports.jsTypeToFieldType = jsTypeToFieldType
 ///////////
 
 /**
- * Create a catalogg field object.
- * @param {FIELD_TYPE} fieldType catalogg data type
+ * Create a field object.
+ * @param {FIELD_TYPE} fieldType data type
  * @param {*} fieldData Native js data type must match field type
  */
 const createField = (fieldType, fieldData) => {
     const creationErr = (msg) => new Error(
-        `catologg field creation error: ${msg}`
+        `Field creation error: ${msg}`
     )
     //Ensure supplied field type exists.
     if (!FIELD_TYPE.includes(fieldType)) {
@@ -116,14 +116,14 @@ const createField = (fieldType, fieldData) => {
 }
 
 /**
- * Validate a catalogg field object.
+ * Validate a field object.
  * @param {*} field Field object to validate.
  * @param {*} fieldValidator Optional functional field validator. (true = valid)
  */
 const validateField = (field, fieldValidator=()=>true) => {
     const fieldJson = JSON.stringify(field)
     const validationErr = (msg) => new Error(
-        `catalogg field validation error: ${msg}\n` +
+        `field validation error: ${msg}\n` +
         `${fieldJson}`
     )
     //Check that field has only 2 properties
@@ -184,7 +184,7 @@ const validateField = (field, fieldValidator=()=>true) => {
 }
 
 /**
- * Update the data of a catalogg field object.
+ * Update the data of a field object.
  * (Performs validation on updated field object too.)
  * @param {*} field Field object to update.
  * @param {*} newData New data to apply to field object.
@@ -203,7 +203,7 @@ const updateField = (field, newData) => {
 }
 
 /**
- * Clone a catalogg field object.
+ * Clone a field object.
  * (Performs validation on cloned field object too.)
  * @param {*} field Field object to clone.
  * @returns {*} Cloned field object.
