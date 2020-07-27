@@ -8,7 +8,7 @@ Small Node.js library for creating and validating data fields.
 <dd><p>Field data types.</p>
 </dd>
 <dt><a href="#JS_TYPE">JS_TYPE</a></dt>
-<dd><p>Representation of equivalent native JS types.</p>
+<dd><p>Representation of native JS types.</p>
 </dd>
 </dl>
 
@@ -18,16 +18,13 @@ Small Node.js library for creating and validating data fields.
 <dt><a href="#fieldTypeToJsType">fieldTypeToJsType(fieldType)</a> ⇒ <code>string</code></dt>
 <dd><p>Convert field type to native js type.</p>
 </dd>
-<dt><a href="#jsTypeToFieldType">jsTypeToFieldType(jsType)</a> ⇒ <code>string</code></dt>
-<dd><p>Convert native js type to field type.</p>
+<dt><a href="#validateField">validateField(field, fieldValidator)</a></dt>
+<dd><p>Validate a field object.</p>
 </dd>
 <dt><a href="#createField">createField(fieldType, fieldData)</a></dt>
 <dd><p>Create a field object.
 Native js type of fieldData must match equivalent
 fieldType.</p>
-</dd>
-<dt><a href="#validateField">validateField(field, fieldValidator)</a></dt>
-<dd><p>Validate a field object.</p>
 </dd>
 <dt><a href="#updateField">updateField(field, newData)</a> ⇒ <code>Object</code></dt>
 <dd><p>Update the data of a field object.
@@ -48,7 +45,7 @@ Field data types.
 <a name="JS_TYPE"></a>
 
 ## JS\_TYPE
-Representation of equivalent native JS types.
+Representation of native JS types.
 
 **Kind**: global constant  
 <a name="fieldTypeToJsType"></a>
@@ -62,16 +59,17 @@ Convert field type to native js type.
 | --- | --- |
 | fieldType | <code>string</code> | 
 
-<a name="jsTypeToFieldType"></a>
+<a name="validateField"></a>
 
-## jsTypeToFieldType(jsType) ⇒ <code>string</code>
-Convert native js type to field type.
+## validateField(field, fieldValidator)
+Validate a field object.
 
 **Kind**: global function  
 
-| Param | Type |
-| --- | --- |
-| jsType | <code>string</code> | 
+| Param | Type | Description |
+| --- | --- | --- |
+| field | <code>Object</code> | Field object to validate. |
+| fieldValidator | <code>function</code> | Functional field validator. (true = valid) |
 
 <a name="createField"></a>
 
@@ -86,18 +84,6 @@ fieldType.
 | --- | --- | --- |
 | fieldType | <code>string</code> | Field's data type. |
 | fieldData | <code>\*</code> | Field's data content. |
-
-<a name="validateField"></a>
-
-## validateField(field, fieldValidator)
-Validate a field object.
-
-**Kind**: global function  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| field | <code>Object</code> | Field object to validate. |
-| fieldValidator | <code>function</code> | Functional field validator. (true = valid) |
 
 <a name="updateField"></a>
 
