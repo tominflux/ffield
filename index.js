@@ -11,30 +11,21 @@ const FIELD_TYPE = {
 }
 
 /**
- * Representation of equivalent native JS types.
+ * Representation of native JS types.
  */
 const JS_TYPE = {
     STRING: "string",
     NUMBER: "number",
     BOOLEAN: "boolean",
-    OBJECT: "object",
-    ARRAY: "array"
+    OBJECT: "object"
 }
 
 const ftj = new Map([
     [FIELD_TYPE.STRING, JS_TYPE.STRING],
-    [FIELD_TYPE.NUMBER, JS_TYPE.NUMBER]
-    [FIELD_TYPE.BOOLEAN, JS_TYPE.BOOLEAN]
-    [FIELD_TYPE.OBJECT, JS_TYPE.OBJECT]
-    [FIELD_TYPE.ARRAY, JS_TYPE.ARRAY]
-])
-
-const jtf = new Map([
-    [JS_TYPE.STRING, FIELD_TYPE.STRING],
-    [JS_TYPE.NUMBER, FIELD_TYPE.NUMBER]
-    [JS_TYPE.BOOLEAN, FIELD_TYPE.BOOLEAN]
-    [JS_TYPE.OBJECT, FIELD_TYPE.OBJECT]
-    [JS_TYPE.ARRAY, FIELD_TYPE.ARRAY]
+    [FIELD_TYPE.NUMBER, JS_TYPE.NUMBER],
+    [FIELD_TYPE.BOOLEAN, JS_TYPE.BOOLEAN],
+    [FIELD_TYPE.OBJECT, JS_TYPE.OBJECT],
+    [FIELD_TYPE.ARRAY, JS_TYPE.OBJECT]
 ])
 
 /**
@@ -55,71 +46,52 @@ const fieldTypeToJsType = (fieldType) => {
     return ftj.get(fieldType)
 }
 
-/**
- * Convert native js type to field type.
- * @param {string} jsType 
- * @returns {string}
- */
-const jsTypeToFieldType = (jsType) => {
-    //Ensure a conversion for given js type exists.
-    if (!jtf.has(jsType)) {
-        throw new Error(
-            `Js type to field type conversion ` +
-            `error: No conversion exists for js type ` +
-            `"${jsType}".`
-        )
-    }
-    //
-    return jtf.get(jsType)
-}
-
 exports.FIELD_TYPE = FIELD_TYPE
 exports.JS_TYPE = JS_TYPE
 exports.fieldTypeToJsType = fieldTypeToJsType
-exports.jsTypeToFieldType = jsTypeToFieldType
 
 ///////////
 ///////////
 
 
-///////////
-///////////
-
-/**
- * Create a field object.
- * Native js type of fieldData must match equivalent
- * fieldType.
- * @param {string} fieldType Field's data type.
- * @param {*} fieldData Field's data content.
- */
-const createField = (fieldType, fieldData) => {
-    const creationErr = (msg) => new Error(
-        `Field creation error: ${msg}`
-    )
-    //Ensure supplied field type exists.
-    if (!FIELD_TYPE.includes(fieldType)) {
-        throw creationErr(
-            `Field type "${fieldType}" does not exist`
-        )
+//Ensure supplied data matches required type.
+//(null is exempt)
+const ensureFieldDataMatchesFieldType = (fieldType, fieldData) => {
+    //Null is exempt.
+    if (fieldData === null) {
+        return
     }
-    //Ensure supplied data matches required type.
-    //(null is exempt)
+    //Get expected JS type from field type,
+    //and compare against "typeof" call
     const jsType = fieldTypeToJsType(fieldType)
-    if (
-        typeof fieldData !== jsType &&
-        fieldData !== null
-    ) {
-        throw creationErr(
-            `Field data's js type "${jsType}" does ` +
-            `not match given field type "${fieldType}".`
+    const fieldDataType = typeof fieldData
+    const matchesJsType = (fieldDataType === jsType)
+    if (!matchesJsType) {
+        throw new Error(
+            `Field data js type is "${fieldDataType}", ` +
+            `expected "${jsType}"`
         )
     }
-    //Create and return field object.
-    const field = {
-        type: fieldType,
-        data: fieldData
+    //"typeof" call does not recognise arrays.
+    //So separate check is needed.
+    if (fieldType === FIELD_TYPE.ARRAY) {
+        const isArray = Array.isArray(fieldData)
+        if(!isArray) {
+            throw new Error(
+                `Field data is not an array, but field type is ` +
+                `specified as "${FIELD_TYPE}"`
+            )
+        }
     }
-    return field
+    if (fieldType === FIELD_TYPE.OBJECT) {
+        const isArray = Array.isArray(fieldData)
+        if(isArray) {
+            throw new Error(
+                `Field data is an array, but field type is ` +
+                `specified as "${FIELD_TYPE}"`
+            )
+        }
+    }
 }
 
 /**
@@ -133,7 +105,7 @@ const createField = (fieldType, fieldData) => {
 const validateField = (field, fieldValidator=()=>true) => {
     const fieldJson = JSON.stringify(field)
     const validationErr = (msg) => new Error(
-        `field validation error: ${msg}\n` +
+        `Invalid field -- ${msg}\n` +
         `${fieldJson}`
     )
     //Check that field has only 2 properties
@@ -156,16 +128,29 @@ const validateField = (field, fieldValidator=()=>true) => {
             `Field object does not have a "data" property.`
         )
     }
+    //Ensure supplied field type exists.
+    const includes = (obj, val) => {
+        for (const key in obj) {
+            if (obj[key] === val) {
+                return true
+            }
+        }
+        return false
+    }
+    if (!includes(FIELD_TYPE, field.type)) {
+        throw validationErr(
+            `Field type "${field.type}" does not exist`
+        )
+    }
     //Check that js type of field data matches field type.
     //(null is exempt)
-    const jsType = fieldTypeToJsType(field.type)
-    if (
-        typeof field.data !== jsType &&
-        field.data !== null
-    ) {
+    try {
+        ensureFieldDataMatchesFieldType(field.type, field.data)
+    } catch (err) {
         throw validationErr(
-            `Js type "${jsType}" of field's "data" property ` 
-            `does not match its field type "${fieldType}".`
+            `Field data's actual type does ` +
+            `not match given field type "${field.type}".\n` +
+            `${err.message}`
         )
     }
     //Run field validator.
@@ -183,7 +168,7 @@ const validateField = (field, fieldValidator=()=>true) => {
                 `Field validator returned null.`
             )
         }
-        if (typeof result !== true) {
+        if (result !== true) {
             throw validationErr(
                 `Field validator did not return true.`
             )
@@ -191,6 +176,31 @@ const validateField = (field, fieldValidator=()=>true) => {
     } catch (err) {
         throw validationErr(err.message)
     }
+}
+
+/**
+ * Create a field object.
+ * Native js type of fieldData must match equivalent
+ * fieldType.
+ * @param {string} fieldType Field's data type.
+ * @param {*} fieldData Field's data content.
+ */
+const createField = (fieldType, fieldData) => {
+    //Create field object.
+    const field = {
+        type: fieldType,
+        data: fieldData
+    }
+    //Perform basic field validation
+    try {
+        validateField(field)
+    } catch (err) {
+        throw new Error(
+            `Field creation error: ${err.message}`
+        )
+    }
+    //
+    return field
 }
 
 /**
@@ -212,8 +222,14 @@ const updateField = (field, newData) => {
         ...field, 
         data: newData
     }
-    //Perform basic validation of new field.
-    validateField(newField)
+    //Perform basic field validation
+    try {
+        validateField(newField)
+    } catch (err) {
+        throw new Error(
+            `Field update error: ${err.message}`
+        )
+    }
     //Return new field
     return newField
 }
@@ -235,8 +251,14 @@ const cloneField = (field) => {
     const copiedField = {
         ...field
     }
-    //Perform basic validation of copied field.
-    validateField(copiedField)
+    //Perform basic field validation
+    try {
+        validateField(field)
+    } catch (err) {
+        throw new Error(
+            `Field clone error: ${err.message}`
+        )
+    }
     //Return copied field
     return copiedField
 }
