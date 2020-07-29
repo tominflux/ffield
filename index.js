@@ -1,4 +1,21 @@
 
+
+const objHasVal = (obj, val) => {
+    for (const key in obj) {
+        if (obj[key] === val) {
+            return true
+        }
+    }
+    return false
+}
+
+exports.objHasVal = objHasVal
+
+
+////////////
+////////////
+
+
 /**
  * Field data types.
  */
@@ -129,15 +146,7 @@ const validateField = (field, fieldValidator=()=>true) => {
         )
     }
     //Ensure supplied field type exists.
-    const includes = (obj, val) => {
-        for (const key in obj) {
-            if (obj[key] === val) {
-                return true
-            }
-        }
-        return false
-    }
-    if (!includes(FIELD_TYPE, field.type)) {
+    if (!objHasVal(FIELD_TYPE, field.type)) {
         throw validationErr(
             `Field type "${field.type}" does not exist`
         )
