@@ -1,5 +1,21 @@
 
 
+/**
+ * @module ffield
+ */
+
+
+////////////
+////////////
+
+
+/**
+ * Checks if specified object has a property
+ * with the specified value.
+ * @param {*} obj 
+ * @param {*} val
+ * @returns {boolean} 
+ */
 const objHasVal = (obj, val) => {
     for (const key in obj) {
         if (obj[key] === val) {
@@ -63,9 +79,6 @@ const fieldTypeToJsType = (fieldType) => {
     return ftj.get(fieldType)
 }
 
-exports.FIELD_TYPE = FIELD_TYPE
-exports.JS_TYPE = JS_TYPE
-exports.fieldTypeToJsType = fieldTypeToJsType
 
 ///////////
 ///////////
@@ -272,7 +285,19 @@ const cloneField = (field) => {
     return copiedField
 }
 
-exports.createField = createField
-exports.validateField = validateField
-exports.updateField = updateField
-exports.cloneField = cloneField
+/////////
+/////////
+
+module.exports = [
+    //Misc.
+    objHasVal,
+    //Field Type
+    FIELD_TYPE,
+    JS_TYPE,
+    fieldTypeToJsType,
+    //Field
+    validateField,
+    createField,
+    updateField,
+    cloneField
+]

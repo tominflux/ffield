@@ -1,113 +1,110 @@
 # ffield
 Small Node.js library for creating and validating data fields.
 
-## Constants
+---
 
-<dl>
-<dt><a href="#FIELD_TYPE">FIELD_TYPE</a></dt>
-<dd><p>Field data types.</p>
-</dd>
-<dt><a href="#JS_TYPE">JS_TYPE</a></dt>
-<dd><p>Representation of native JS types.</p>
-</dd>
-</dl>
+# API
 
-## Functions
+<a name="module_ffield"></a>
 
-<dl>
-<dt><a href="#fieldTypeToJsType">fieldTypeToJsType(fieldType)</a> ⇒ <code>string</code></dt>
-<dd><p>Convert field type to native js type.</p>
-</dd>
-<dt><a href="#validateField">validateField(field, fieldValidator)</a></dt>
-<dd><p>Validate a field object.</p>
-</dd>
-<dt><a href="#createField">createField(fieldType, fieldData)</a></dt>
-<dd><p>Create a field object.
-Native js type of fieldData must match equivalent
-fieldType.</p>
-</dd>
-<dt><a href="#updateField">updateField(field, newData)</a> ⇒ <code>Object</code></dt>
-<dd><p>Update the data of a field object.
-(Performs validation on updated field object too.)</p>
-</dd>
-<dt><a href="#cloneField">cloneField(field)</a> ⇒ <code>Object</code></dt>
-<dd><p>Clone a field object.
-(Performs validation on cloned field object too.)</p>
-</dd>
-</dl>
+## ffield
 
-<a name="FIELD_TYPE"></a>
+* [ffield](#module_ffield)
+    * [~FIELD_TYPE](#module_ffield..FIELD_TYPE)
+    * [~JS_TYPE](#module_ffield..JS_TYPE)
+    * [~objHasVal(obj, val)](#module_ffield..objHasVal) ⇒ <code>boolean</code>
+    * [~fieldTypeToJsType(fieldType)](#module_ffield..fieldTypeToJsType) ⇒ <code>string</code>
+    * [~validateField(field, fieldValidator)](#module_ffield..validateField)
+    * [~createField(fieldType, fieldData)](#module_ffield..createField)
+    * [~updateField(field, newData)](#module_ffield..updateField) ⇒ <code>Object</code>
+    * [~cloneField(field)](#module_ffield..cloneField) ⇒ <code>Object</code>
 
-## FIELD\_TYPE
+<a name="module_ffield..FIELD_TYPE"></a>
+
+### ffield~FIELD\_TYPE
 Field data types.
 
-**Kind**: global constant  
-<a name="JS_TYPE"></a>
+**Kind**: inner constant of [<code>ffield</code>](#module_ffield)  
+<a name="module_ffield..JS_TYPE"></a>
 
-## JS\_TYPE
+### ffield~JS\_TYPE
 Representation of native JS types.
 
-**Kind**: global constant  
-<a name="fieldTypeToJsType"></a>
+**Kind**: inner constant of [<code>ffield</code>](#module_ffield)  
+<a name="module_ffield..objHasVal"></a>
 
-## fieldTypeToJsType(fieldType) ⇒ <code>string</code>
+### ffield~objHasVal(obj, val) ⇒ <code>boolean</code>
+Checks if specified object has a property
+with the specified value.
+
+**Kind**: inner method of [<code>ffield</code>](#module_ffield)  
+
+| Param | Type |
+| --- | --- |
+| obj | <code>\*</code> | 
+| val | <code>\*</code> | 
+
+<a name="module_ffield..fieldTypeToJsType"></a>
+
+### ffield~fieldTypeToJsType(fieldType) ⇒ <code>string</code>
 Convert field type to native js type.
 
-**Kind**: global function  
+**Kind**: inner method of [<code>ffield</code>](#module_ffield)  
 
 | Param | Type |
 | --- | --- |
 | fieldType | <code>string</code> | 
 
-<a name="validateField"></a>
+<a name="module_ffield..validateField"></a>
 
-## validateField(field, fieldValidator)
+### ffield~validateField(field, fieldValidator)
 Validate a field object.
 
-**Kind**: global function  
+**Kind**: inner method of [<code>ffield</code>](#module_ffield)  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | field | <code>Object</code> | Field object to validate. |
 | fieldValidator | <code>function</code> | Functional field validator. (true = valid) |
 
-<a name="createField"></a>
+<a name="module_ffield..createField"></a>
 
-## createField(fieldType, fieldData)
+### ffield~createField(fieldType, fieldData)
 Create a field object.
 Native js type of fieldData must match equivalent
 fieldType.
 
-**Kind**: global function  
+**Kind**: inner method of [<code>ffield</code>](#module_ffield)  
 
-| Param | Type | Description |
-| --- | --- | --- |
-| fieldType | <code>string</code> | Field's data type. |
-| fieldData | <code>\*</code> | Field's data content. |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| fieldType | <code>string</code> |  | Field's data type. |
+| fieldData | <code>\*</code> | <code></code> | Field's data content. |
 
-<a name="updateField"></a>
+<a name="module_ffield..updateField"></a>
 
-## updateField(field, newData) ⇒ <code>Object</code>
+### ffield~updateField(field, newData) ⇒ <code>Object</code>
 Update the data of a field object.
 (Performs validation on updated field object too.)
 
-**Kind**: global function  
+**Kind**: inner method of [<code>ffield</code>](#module_ffield)  
 **Returns**: <code>Object</code> - Updated field object.  
 
-| Param | Type | Description |
-| --- | --- | --- |
-| field | <code>Object</code> | Field object to update. |
-| newData | <code>\*</code> | New data to apply to field object. |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| field | <code>Object</code> |  | Field object to update. |
+| newData | <code>\*</code> | <code></code> | New data to apply to field object. |
 
-<a name="cloneField"></a>
+<a name="module_ffield..cloneField"></a>
 
-## cloneField(field) ⇒ <code>Object</code>
+### ffield~cloneField(field) ⇒ <code>Object</code>
 Clone a field object.
 (Performs validation on cloned field object too.)
 
-**Kind**: global function  
+**Kind**: inner method of [<code>ffield</code>](#module_ffield)  
 **Returns**: <code>Object</code> - Cloned field object.  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | field | <code>Object</code> | Field object to clone. |
+

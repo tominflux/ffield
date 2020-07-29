@@ -4,7 +4,8 @@
   "description": "Small Node.js library for creating and validating data fields.",
   "main": "index.js",
   "scripts": {
-    "test": "npx mocha"
+    "test": "npx mocha",
+    "docs": "jsdoc2md index.js --template README.hbs > README.md"
   },
   "repository": {
     "type": "git",
