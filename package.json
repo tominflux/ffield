@@ -25,7 +25,7 @@
     "url": "https://github.com/tominflux/ffield/issues"
   },
   "homepage": "https://github.com/tominflux/ffield#readme",
-  "dependencies": {
+  "devDependencies": {
     "mocha": "^8.0.1"
   }
 }
