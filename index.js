@@ -286,3 +286,23 @@ exports.createField = createField
 exports.validateField = validateField
 exports.updateField = updateField
 exports.cloneField = cloneField
+
+
+/////////////
+/////////////
+
+const VALIDATOR_TYPE = {
+    MATCH: "MATCH", // Params: { comparison: ffield }
+    ONEOF: "ONEOF", // Params: { set: Array<ffield> }
+    REGEX: "REGEX", // Params: { regex: string, group: number }
+    RANGE: "RANGE", // Params: { a: number field, b: number field }
+}
+
+const createValidator = (type, params) => {
+    
+}
+
+//Matches value.
+//Is in a set of values.
+//Matches regex.
+//Is in a range.
